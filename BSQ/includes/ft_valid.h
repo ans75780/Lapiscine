@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_io.h                                            :+:      :+:    :+:   */
+/*   ft_valid.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kylee <kylee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/10 18:19:18 by kylee             #+#    #+#             */
-/*   Updated: 2020/02/12 16:26:23 by kylee            ###   ########.fr       */
+/*   Created: 2020/02/12 12:01:51 by kylee             #+#    #+#             */
+/*   Updated: 2020/02/12 16:24:53 by kylee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_IO_H
-# define FT_IO_H
+#ifndef FT_VALID_H
+# define FT_VALID_H
 
-# include <unistd.h>
-
-void		ft_write(const char *str);
-void		ft_write_c(char c);
+int		ft_is_printable(char c);
+int		ft_is_numeric(char c);
 
 #endif

@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_io.h                                            :+:      :+:    :+:   */
+/*   ft_setting.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kylee <kylee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/10 18:19:18 by kylee             #+#    #+#             */
-/*   Updated: 2020/02/12 16:26:23 by kylee            ###   ########.fr       */
+/*   Created: 2020/02/12 15:50:15 by kylee             #+#    #+#             */
+/*   Updated: 2020/02/12 16:21:00 by kylee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_IO_H
-# define FT_IO_H
+#ifndef FT_SETTING_H
+# define FT_SETTING_H
 
-# include <unistd.h>
-
-void		ft_write(const char *str);
-void		ft_write_c(char c);
+void			ft_init_arr(t_array *arr);
+void			ft_init_res(t_res_po *res);
+void			ft_init_map(t_map_con *map, int fd);
+void			ft_set_map(int fd, t_map_argu *map_argu);
 
 #endif

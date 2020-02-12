@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_io.h                                            :+:      :+:    :+:   */
+/*   ft_utils.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kylee <kylee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/10 18:19:18 by kylee             #+#    #+#             */
-/*   Updated: 2020/02/12 16:26:23 by kylee            ###   ########.fr       */
+/*   Created: 2020/02/12 16:15:49 by kylee             #+#    #+#             */
+/*   Updated: 2020/02/12 16:22:22 by kylee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_IO_H
-# define FT_IO_H
+#ifndef FT_UTILS_H
+# define FT_UTILS_H
 
-# include <unistd.h>
+# include "data_type.h"
 
-void		ft_write(const char *str);
-void		ft_write_c(char c);
+int				ft_is_box(t_res_po *res, int col, int row);
+int				ft_g_error(void);
 
 #endif

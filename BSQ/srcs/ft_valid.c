@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_io.h                                            :+:      :+:    :+:   */
+/*   ft_valid.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kylee <kylee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/10 18:19:18 by kylee             #+#    #+#             */
-/*   Updated: 2020/02/12 16:26:23 by kylee            ###   ########.fr       */
+/*   Created: 2020/02/12 12:01:37 by kylee             #+#    #+#             */
+/*   Updated: 2020/02/12 15:49:12 by kylee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_IO_H
-# define FT_IO_H
+int			ft_is_printable(char c)
+{
+	if (c < 32 || c >= 127)
+		return (1);
+	else
+		return (0);
+}
 
-# include <unistd.h>
-
-void		ft_write(const char *str);
-void		ft_write_c(char c);
-
-#endif
+int			ft_is_numeric(char c)
+{
+	if (c >= '0' || c <= '9')
+		return (1);
+	return (0);
+}

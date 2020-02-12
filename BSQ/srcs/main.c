@@ -6,167 +6,97 @@
 /*   By: kylee <kylee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:43:56 by jiin              #+#    #+#             */
-/*   Updated: 2020/02/10 22:29:43 by kylee            ###   ########.fr       */
+/*   Updated: 2020/02/12 19:23:21 by jiin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
-#include "ft_io.h"
 #include "data_type.h"
-#include "macro.h"
-#include "ft_math.h"
-#include <stdio.h>
+#include "ft_io.h"
+#include "ft_setting.h"
+#include "ft_print.h"
 #include <stdlib.h>
-//#include <fildes.h>
 
-/*
-** desc: 지도 행 길이 반환 함수
-** params: fd
-** return: length of one row.
-*/
-
-
-
-/*
-** desc: 지도 행 길이 반환 함수
-** params: fd
-** return: length of one row.
-*/
-int		ft_lenght_row(int fd)
+void			ft_main(int fd, char *map_name)
 {
-	char	buf;
-	int		length;
+	t_map_con	map;
+	t_array		arr;
+	t_res_po	res;
+	t_map_argu	map_argu;
+	char		buf[MAX_LEN];
 
-	buf = 0;
-	read(fd, &buf, 1);
-	length = 0;
-	while (buf != '\n' || buf != '\0')
-	{
-		read(fd, &buf, 1);
-		length++;
-	}
-	return (length);
-}
-
-
-int     ft_min_arr(t_array *arr, int i)
-{
-	int	temp;
-
-    if (i == 0)
-	{
-		arr->array[i] = ft_min(arr->array[i], arr->diagonal);
-	}
-    else
-    {
-        temp = arr->array[i];
-        arr->array[i] = ft_min(ft_min(arr->array[i], arr->array[i - 1]), arr->diagonal);
-        arr->diagonal = temp;
-    }
-    return (arr->array[i]);
+	ft_init_res(&res);
+	ft_init_arr(&arr);
+	ft_init_map(&map, fd);
+	map_argu.arr = &arr;
+	map_argu.res = &res;
+	map_argu.map = &map;
+	fd = open(map_name, O_RDONLY);
+	read(fd, buf, map.num_col_first + 1);
+	ft_set_map(fd, &map_argu);
+	if (g_error)
+		ft_write("Error\n");
+	else
+		ft_print_res(map_name, &res, &map);
+	close(fd);
+	return ;
 }
 
 /*
-** desc: 장애물 유무를 확인해서 숫자로 표현하는 함수
+** desc: 표준 입력으로 받을 때 실행하는 함수
 ** params:
 ** return:
 */
 
-void   	ft_set_num(char *buf, t_map_config *map, t_array *arr)
+void			ft_std_func(void)
 {
-    int i;
+	char		buf[MAX_LEN_BUF];
+	char		*map_name;
+	int			fd;
 
-    i = 0;
-    arr->diagonal = 0;   
-
-    while (i < map->num_col)
-    {
-        if (buf[i] == 'o')//map->obstacle_char)
-            arr->array[i]= 0;
-		else if (buf[i] == '.')//map->empty_char)
-            arr->array[i] = ft_min_arr(arr, i) + 1;
-        else
-        {
-            ft_write("Error\n");
-            exit(0);
-        }
-		printf("%d", arr->array[i]);
-        i++;
-    }
-	printf("\n");
-    if (!(buf[i] == '\n' || buf[i] == '\0'))
-    {
-        ft_write("sdfsd Error\n");
-        exit(0);
-    }
+	map_name = TEMP_FILE;
+	fd = open(map_name, O_CREAT);
+	close(fd);
+	fd = open(map_name, O_WRONLY);
+	while (read(0, buf, 1))
+		write(fd, buf, 1);
+	close(fd);
+	fd = open(map_name, O_RDONLY);
+	ft_write("\n");
+	ft_main(fd, map_name);
+	return ;
 }
 
 /*
-** desc: 메인 함수
-** params:
-** return:
+** desc: main function calling ft_main
+** params: argc, argv
+** return: 0 no problems.
 */
 
-void	ft_init(t_array *arr)
+int				main(int argc, char *argv[])
 {
-	int i;
+	int			fd;
+	char		*map_name;
+	int			j;
 
-	i = 0;
-	while (i< MAX_LEN)
-	{
-		arr->array[i] = 0;
-		i++;
-	}
-}
-
-int main(int argc, char *argv[])
-{
-	int fd;
-	char *map_name;
-	char buf[MAX_LEN];
-	t_map_config	map;
-	t_array			arr;
-
-	ft_init(&arr);
-	map.num_col = 0;
+	j = 1;
 	if (argc == 1)
 	{
-		fd = open("map", O_RDONLY);
-	}   
-	if (argc == 2)
+		ft_std_func();
+		return (0);
+	}
+	while (j < argc)
 	{
-		map_name = argv[1];
+		g_error = 0;
+		map_name = argv[j];
 		fd = open(map_name, O_RDONLY);
+		ft_main(fd, map_name);
+		if (j != argc - 1)
+			ft_write("\n");
+		j++;
 	}
-	if (fd < 0)
+	while (1)
 	{
-		ft_write("Map Error\n");
-		return (-1);
+		;
 	}
-
-
-	read(fd, buf, 5);
-	map.num_row = buf[0] -'0';
-    ft_write(buf);
-    read(fd, buf, MAX_LEN);
-    while (buf[map.num_col] != '\n' && buf[map.num_col])
-        map.num_col++;
-    printf("%d\n", map.num_col);
-	fd = open(map_name, O_RDONLY);
-	read(fd, buf, 5);
-	buf[5] = '\0';
-    int i;
-	i = 0;
-    while (i < map.num_row)
-    {
-		// 한 줄 읽으면서 그 전 최솟값 + 1 or 장애물이면 0
-		// 해당 값이 기존 저장한 값의 최대라면, 해당 위치의 인덱스와 값으로 교쳊
-        read(fd, buf, map.num_col + 1);
-		buf[map.num_col] = '\0';
-        ft_set_num(buf, &map, &arr); // 문자열 채우는 용도 
-		i++;
-    }
-
-	close(fd);
-	return (0);
 }

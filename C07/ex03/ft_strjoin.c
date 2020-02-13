@@ -1,58 +1,83 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strjoint.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiin <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/04 14:11:21 by jiin              #+#    #+#             */
-/*   Updated: 2020/02/06 21:27:32 by jiin             ###   ########.fr       */
+/*   Created: 2020/02/07 15:38:38 by jiin              #+#    #+#             */
+/*   Updated: 2020/02/13 19:17:58 by jiin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-char	*ft_strjoin(int size, char **strs, char *sep)
+int		ft_str_length(char *str)
 {
-	int i;
-	int j;
-	int index;
-	char *string_ary;
-	int len_size;
-	char *point;
+	int	i;
 
 	i = 0;
-	while (strs[i] != '\0')
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strcpy(char *dest, char *src)
+{
+	int i;
+
+	i = 0;
+	while (src[i] != '\0')
 	{
-		j = 0;
-		while (*strs[j] != '\0')
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+int		ft_final_length(char **strings, int size, int sep_length)
+{
+	int	final_length;
+	int	i;
+
+	final_length = 0;
+	i = 0;
+	while (i < size)
+	{
+		final_length += ft_str_length(strings[i]);
+		final_length += sep_length;
+		i++;
+	}
+	final_length -= sep_length;
+	return (final_length);
+}
+
+char	*ft_strjoin(int size, char **strs, char *sep)
+{
+	int		full_length;
+	int		i;
+	char	*strs_head;
+	char	*string;
+
+	if (size == 0)
+		return ((char *)malloc(sizeof(char)));
+	full_length = ft_final_length(strs, size, ft_str_length(sep));
+	if (!(string = (char *)malloc((full_length + 1) * sizeof(char))))
+		return (0);
+	strs_head = string;
+	i = 0;
+	while (i < size)
+	{
+		ft_strcpy(strs_head, strs[i]);
+		strs_head += ft_str_length(strs[i]);
+		if (i < size - 1)
 		{
-			len_size++;
-			j++;
+			ft_strcpy(strs_head, sep);
+			strs_head += ft_str_length(sep);
 		}
 		i++;
 	}
-	
-	string_ary = (char*)malloc(sizeof(char)*(len_size + size));
-	point = string_ary;
-	i = 0;
-	index = 0;
-	while (strs[i] != '\0')
-	{
-		j = 0;
-		while (*strs[j] != '\0')
-		{
-			string_ary[index] = *strs[j];
-			j++;
-			index++;
-		}
-		while (*sep != '\0')
-		{
-			string_ary[index] = *sep;
-			index++;
-			sep++;
-			i++;
-		}
-	}
-	return (point);
+	*strs_head = '\0';
+	return (string);
 }

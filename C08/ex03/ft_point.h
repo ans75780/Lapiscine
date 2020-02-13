@@ -6,14 +6,14 @@
 /*   By: jiin <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 20:47:31 by jiin              #+#    #+#             */
-/*   Updated: 2020/02/05 21:38:42 by jiin             ###   ########.fr       */
+/*   Updated: 2020/02/13 09:31:55 by jiin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	FT_POINT_H
+#ifndef FT_POINT_H
 # define FT_POINT_H
 
-typedef struct	s_point	
+typedef struct	s_point
 {
 	int x;
 	int y;

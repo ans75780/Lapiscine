@@ -6,7 +6,7 @@
 /*   By: jiin <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 22:31:30 by jiin              #+#    #+#             */
-/*   Updated: 2020/02/06 22:51:46 by jiin             ###   ########.fr       */
+/*   Updated: 2020/02/13 19:27:34 by jiin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		ft_row_count(char *str, char *charset)
 	row_count = 0;
 	while (str[i] != '\0')
 	{
-		if(!is_charset(str[i], charset))
+		if (!is_charset(str[i], charset))
 		{
 			while (str[i] != '\0' && (!is_charset(str[i], charset)))
 				++i;
@@ -57,13 +57,13 @@ void	ft_strcpy(char *dest, char *from, char *to)
 
 char	**ft_split(char *str, char *charset)
 {
-	char **map;
-	int index;
-	int i;
-	int from;
+	char	**map;
+	int		index;
+	int		i;
+	int		from;
 
 	index = 0;
-	map = (char**)malloc(sizeof(char*) * ft_row_count(str, charset) + 1);
+	map = (char**)malloc(sizeof(char*) * (ft_row_count(str, charset) + 1));
 	i = 0;
 	while (str[i] != '\0')
 	{
@@ -79,16 +79,7 @@ char	**ft_split(char *str, char *charset)
 			++index;
 		}
 		++i;
-	}map[index] = 0;
+	}
+	map[index] = 0;
 	return (map);
-}
-#include <stdio.h>
-
-int main()
-{
-	char a[10] = "helloworld";
-	char b[3] = "ld";
-
-	for(int i=0; i<3; i++)
-		printf("%s\n", ft_split(a, b)[i]);
 }
